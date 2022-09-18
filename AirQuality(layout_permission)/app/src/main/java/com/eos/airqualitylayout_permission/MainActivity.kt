@@ -1,6 +1,7 @@
 package com.eos.airqualitylayout_permission
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         updateUI()
     }
 
-    fun getCurrentAddress(latitude: Double, longitude: Double) : Address? {
+    private fun getCurrentAddress(latitude: Double, longitude: Double) : Address? {
         val geocoder = Geocoder(this, Locale.getDefault())
         // Address 객체는 주소와 관련된 여러 정보를 가지고 있습니다
         // android.location.Address
@@ -77,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         return addresses[0]
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateUI() {
         locationProvider = LocationProvider(this@MainActivity)
 
@@ -89,6 +91,11 @@ class MainActivity : AppCompatActivity() {
             // 현재 위치를 가져오기
             val address = getCurrentAddress(latitude, longitude)
             // 주소가 null이 아닐 경우 UI 업데이트
+            address?.let {
+                binding.tvLocationTitle.text = it.thoroughfare
+                binding.tvLocationSubtitle.text = "${it.countryName} ${it.adminArea}"
+            }
+
 
             // 2. 현재 미세먼지 농도 가져오고 UI 업데이트
         } else {
