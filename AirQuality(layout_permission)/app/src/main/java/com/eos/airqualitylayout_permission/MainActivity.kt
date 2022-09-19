@@ -10,6 +10,9 @@ import android.os.Bundle
 3. new key
 4. Community 로 선택 후, create 하면 완성
 
+
+60a03f7e-b804-440e-9999-046b2239ce51
+
 Key 복사 후 저장하기
 
  */
