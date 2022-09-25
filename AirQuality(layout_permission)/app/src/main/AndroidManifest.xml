@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.eos.airqualitylayout_permission">
 
+    <!-- Internet Permission -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- GPS & Location -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
