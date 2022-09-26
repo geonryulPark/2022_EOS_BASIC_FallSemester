@@ -13,6 +13,8 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.eos.airqualitylayout_permission.databinding.ActivityMainBinding
 
 // https://www.iqair.com/ko/ -> API key 받기
@@ -92,11 +94,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun isRuntimePermissionGranted() {
         // 위치 퍼미션을 가지고 있는지 체크
-        TODO("Not yet implemented")
+        val hasFineLocationPermission = ContextCompat.checkSelfPermission(
+            this@MainActivity,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+        val hasCoarseLocationPermission = ContextCompat.checkSelfPermission(
+            this@MainActivity,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+        if (hasFineLocationPermission != PackageManager.PERMISSION_GRANTED ||
+                hasCoarseLocationPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this@MainActivity,
+                REQUIRED_PERMISSION, PERMISSION_REQUEST_CODE)
+        }
     }
 
     private fun isLocationServiceAvailable(): Boolean {
-        TODO("Not yet implemented")
+        val locationManager = getSystemService(LOCATION_SERVICE) as
+                LocationManager
+        return (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
     }
 
     override fun onRequestPermissionsResult(
